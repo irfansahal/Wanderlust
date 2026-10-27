@@ -2,11 +2,19 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  images: {
+    // Destination photos are added by users as arbitrary URLs, so any
+    // http(s) host is allowed for image optimization.
+    remotePatterns: [
+      { protocol: "https", hostname: "**" },
+      { protocol: "http", hostname: "**" },
+    ],
+  },
   experimental: {
     agentFeedback: true,
   },
-  cacheComponents: true,
-  partialPrefetching: true,
+  cacheComponents: false,
+  partialPrefetching: false,
   reactCompiler: true,
   turbopack: {
     rules: {
@@ -16,6 +24,7 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  
 };
 
 export default nextConfig;
