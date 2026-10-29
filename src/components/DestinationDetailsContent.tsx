@@ -1,5 +1,7 @@
+
 import { Destination } from "@/app/destinations/[destinationId]/page";
 import { ArrowRight, CalendarDays, Check, MapPin, Star } from "lucide-react";
+import BookNow from "./bookNow";
 
 const highlights = [
   "Luxury beachfront accommodation",
@@ -88,13 +90,9 @@ export default function DestinationDetailsContent({ destinationDetailsData } : {
           {destinationDetailsData?.date}
         </div>
 
-        <button
-          type="button"
-          className="mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-[#1f9bb8] px-6 py-2.5 text-[13px] font-medium text-white transition-colors hover:bg-[#1a869f]"
-        >
-          Book Now
-          <ArrowRight className="h-4 w-4" />
-        </button>
+       <div>
+         <BookNow destinationDetailsData={destinationDetailsData}/>
+       </div>
 
         <ul className="mt-5 space-y-3 border-t border-slate-100 pt-5">
           {bookingPerks.map((perk) => (
