@@ -1,5 +1,8 @@
 import DestinationDetailsContent from "@/components/DestinationDetailsContent";
 import DestinationDetailsHeader from "@/components/DestinationDetailsHeader";
+import { auth } from "@/lib/auth";
+import GetTokenFromServer from "@/lib/getTokenFormServer";
+import { headers } from "next/headers";
 
 export interface Destination {
     category : string ;
@@ -14,11 +17,20 @@ export interface Destination {
 }
 
 const DestinationDetails = async ({params }) => {
-  
+
     const { destinationId } = await params
     console.log(destinationId);
     
-    const res = await fetch(`http://localhost:8000/single-destination/${destinationId}`);
+   const JWTToken  = await  GetTokenFromServer()
+
+    console.log("Token",JWTToken?.token);
+    
+
+    const res = await fetch(`http://localhost:8000/single-destination/${destinationId}`, {
+      headers : {
+        authorization : `Bearer ${JWTToken?.token}`
+      }
+    });
     const destinationDetailsData = await res.json()
    
     console.log(destinationDetailsData);

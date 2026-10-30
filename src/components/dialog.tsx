@@ -19,6 +19,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { Textarea } from "./ui/textarea"
 import { Destination } from "@/app/destinations/[destinationId]/page"
 import { useState } from "react"
+import GetTokenFromClient from "@/lib/getTokenFromClient"
 
 const fieldStyle =
   "h-10 rounded-sm border-0 bg-slate-50 px-3 text-sm text-slate-700 shadow-none placeholder:text-slate-400 focus-visible:ring-1 focus-visible:ring-[#1f9bb8]";
@@ -56,10 +57,16 @@ export function DialogForm({destinationDetailsData} : {destinationDetailsData : 
 
       console.log(updatedData);
       
+      const token = await GetTokenFromClient()
+           
+        console.log(`Bearer ${token}`);
+        
+       
       const res = await fetch (`http://localhost:8000/update-destination/${destinationDetailsData._id}`,{
         method : "PATCH",
         headers : {
             "Content-Type": "application/json",
+            authorization : `Bearer ${token}`
         },
         body : JSON.stringify(updatedData)
       }

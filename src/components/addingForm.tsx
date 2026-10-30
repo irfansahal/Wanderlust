@@ -13,6 +13,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { authClient } from "@/lib/auth.client";
+import GetTokenFromClient from "@/lib/getTokenFromClient";
 
 const categories = [
   { label: "Beach", value: "beach" },
@@ -35,10 +37,16 @@ const AddingForm = () => {
      const data = Object.fromEntries(new FormData(e.currentTarget));
      console.log(data); // replace with your API call
      
+     const token = await GetTokenFromClient()
+
+     console.log(`Bearer ${token}`);
+     
+
      const res = await fetch(`http://localhost:8000/destination-Create`, {
         method : "POST",
         headers : {
-          "Content-Type" : "application/json"
+          "Content-Type" : "application/json",
+            authorization : `Bearer ${token}`
         },
         body : JSON.stringify(data)
      })
